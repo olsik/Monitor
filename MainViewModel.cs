@@ -1,6 +1,7 @@
 ﻿using Avalonia.Interactivity;
 using Avalonia.Media;
 using OxyPlot;
+using OxyPlot.Axes;
 using OxyPlot.Series;
 using System;
 
@@ -37,6 +38,9 @@ namespace Monitor
 
             // Axes are created automatically if they are not defined
 
+            tmp.Axes.Clear();
+            tmp.Axes.Add(new LinearAxis { Minimum = 0, Maximum = 100, Position = AxisPosition.Bottom, StartPosition = 1, EndPosition = 0 });
+            tmp.Axes.Add(new LinearAxis { Minimum = 0, Maximum = 100, Position = AxisPosition.Left, StartPosition = 1, EndPosition = 0 });
 
             // Set the Model property, the INotifyPropertyChanged event will make the WPF Plot control update its content
             this.Model = tmp;
@@ -86,7 +90,11 @@ namespace Monitor
                     new SolidColorBrush(new Color(colors[index].A, colors[index].R, colors[index].G, colors[index].B))
                     : Brushes.Transparent;
 
+                foreach (var a in Model.Axes)
+                    a.Maximum -= 1;
+
                 AddRandomValue(index);
+
 
             }
         }
