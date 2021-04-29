@@ -1,0 +1,28 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:oxy="clr-namespace:OxyPlot.Avalonia;assembly=OxyPlot.Avalonia"
+        xmlns:AvaloniaApplication4="clr-namespace:AvaloniaApplication4;assembly=AvaloniaApplication4"
+        mc:Ignorable="d" d:DesignWidth="640" d:DesignHeight="450" Width="640" Height="450" 
+        x:Class="AvaloniaApplication4.MainWindow"
+        Title="AvaloniaApplication4">
+  <Window.DataContext>
+    <AvaloniaApplication4:MainViewModel />
+  </Window.DataContext>
+  <Grid ColumnDefinitions="40,*" RowDefinitions="40,40,40,40,*"  Margin="4">
+    <Button Name="btn_A" Tag="0" Grid.Column="0" Grid.Row="0" Margin="0" Padding="3" Click="btn_OnClick">
+      <Image Source="/Assets/obama.jpg"/>
+    </Button>
+    <Button Name="btn_B" Tag="1" Grid.Column="0" Grid.Row="1" Margin="0" Padding="3" Click="btn_OnClick">
+      <Image Source="/Assets/obama.jpg"/>
+    </Button>
+    <Button Name="btn_C" Tag="2" Grid.Column="0" Grid.Row="2" Margin="0" Padding="3" Click="btn_OnClick">
+      <Image Source="/Assets/obama.jpg"/>
+    </Button>
+    <Button Name="btn_D" Tag="3" Grid.Column="0" Grid.Row="3" Margin="0" Padding="3" Click="btn_OnClick">
+        <Image Source="/Assets/obama.jpg"/>
+     </Button>
+    <oxy:PlotView Model="{Binding Model}" Grid.Row="0" Grid.Column="1" Grid.RowSpan="5" />
+  </Grid>  
+</Window>
