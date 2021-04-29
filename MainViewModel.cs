@@ -3,7 +3,7 @@ using Avalonia.Media;
 using OxyPlot;
 using OxyPlot.Series;
 
-namespace AvaloniaApplication4
+namespace Monitor
 {
     public class MainViewModel
     {

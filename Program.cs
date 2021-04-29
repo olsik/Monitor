@@ -3,7 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using System;
 
-namespace AvaloniaApplication4
+namespace Monitor
 {
     class Program
     {

@@ -3,10 +3,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:oxy="clr-namespace:OxyPlot.Avalonia;assembly=OxyPlot.Avalonia"
-        xmlns:AvaloniaApplication4="clr-namespace:AvaloniaApplication4;assembly=AvaloniaApplication4"
+        xmlns:AvaloniaApplication4="clr-namespace:Monitor;assembly=Monitor"
         mc:Ignorable="d" d:DesignWidth="640" d:DesignHeight="450" Width="640" Height="450" 
-        x:Class="AvaloniaApplication4.MainWindow"
-        Title="AvaloniaApplication4">
+        x:Class="Monitor.MainWindow"
+        Title="Resourses Monitor">
   <Window.DataContext>
     <AvaloniaApplication4:MainViewModel />
   </Window.DataContext>
