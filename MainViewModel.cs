@@ -2,6 +2,7 @@
 using Avalonia.Media;
 using OxyPlot;
 using OxyPlot.Series;
+using System;
 
 namespace Monitor
 {
@@ -36,17 +37,43 @@ namespace Monitor
 
             // Axes are created automatically if they are not defined
 
-            tmp.IsLegendVisible = false;
-            tmp.Series.RemoveAt(1);
-            MainWindow.MAINVIEWMODEL = this;
 
             // Set the Model property, the INotifyPropertyChanged event will make the WPF Plot control update its content
             this.Model = tmp;
+
+
+            tmp.IsLegendVisible = false;
+            tmp.Series.RemoveAt(1);
+            MainWindow.MAINVIEWMODEL = this;
+            InitSeries();
         }
 
         public PlotModel Model { get; private set; }
 
         bool[] status = new bool[4];
+        OxyColor[] colors = new OxyColor[4];
+        LineSeries[] series = new LineSeries[4];
+        Random rnd = new Random();
+        private void InitSeries()
+        {
+            colors[0] = OxyColors.GreenYellow;
+            colors[1] = OxyColors.Blue;
+            colors[2] = OxyColors.Fuchsia;
+            colors[3] = OxyColors.Yellow;
+
+            Model.Series.Clear();
+
+            for (int i = 0; i < series.Length; i++)
+            {
+                series[i] = new LineSeries { Title = "Series " + i.ToString(),Color=colors[i] };
+                Model.Series.Add(series[i]);
+            }
+        }
+        private void AddRandomValue(int index)
+        {
+            series[index].Points.Add(new DataPoint(series[index].Points.Count, rnd.Next(0,100)));
+            Model.InvalidatePlot(true);
+        }
         public void btn_OnClick(object sender, Avalonia.Interactivity.RoutedEventArgs args)
         {
             Avalonia.Controls.Button? btn = sender as Avalonia.Controls.Button;
@@ -55,7 +82,12 @@ namespace Monitor
             if (index >= 0 && index < status.Length)
             {
                 status[index] = !status[index];
-                btn.Background = status[index] ? Brushes.LimeGreen : Brushes.Transparent;
+                btn.Background = status[index] ? 
+                    new SolidColorBrush(new Color(colors[index].A, colors[index].R, colors[index].G, colors[index].B))
+                    : Brushes.Transparent;
+
+                AddRandomValue(index);
+
             }
         }
     }
