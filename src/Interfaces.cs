@@ -4,6 +4,7 @@ namespace Monitor
     {
         string Name { get; }
         int[] Data { get; }
-        const int DataLength = 100;
+        //const int _DataLength = 60;
+        void SetParams(int dataLength, int timePeriod);
     }
 }

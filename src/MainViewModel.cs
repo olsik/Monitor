@@ -17,6 +17,8 @@ namespace Monitor
         /// </summary>
         private List<IDataSource> DataSources = new List<IDataSource>();
         Timer aTimer = new Timer(500);
+        private  int dataLength = 100;
+        private int timePeriod_sec = 100;
 
         public MainViewModel()
         {
@@ -46,9 +48,11 @@ namespace Monitor
             // Axes are created automatically if they are not defined
 
             tmp.Axes.Clear();
-            tmp.Axes.Add(new LinearAxis { Minimum = 0, Maximum = 100, Position = AxisPosition.Bottom, StartPosition = 1, EndPosition = 0 });
+            //tmp.Axes.Add(new LinearAxis { Minimum = 0, Maximum = 100, Position = AxisPosition.Bottom, StartPosition = 1, EndPosition = 0 });
+            tmp.Axes.Add(new LinearAxis { Minimum = 0, Maximum = timePeriod_sec, Position = AxisPosition.Bottom, StartPosition = 1, EndPosition = 0 });
             // tmp.Axes.Add(new LinearAxis { Minimum = 0, Maximum = 100, Position = AxisPosition.Left, StartPosition = 1, EndPosition = 0 });
-            tmp.Axes.Add(new LinearAxis { Minimum = 0, Maximum = 100, Position = AxisPosition.Left });
+            //tmp.Axes.Add(new LinearAxis { Minimum = 0, Maximum = 100, Position = AxisPosition.Left });
+            tmp.Axes.Add(new LinearAxis { Minimum = 0, Position = AxisPosition.Left });
 
             // Set the Model property, the INotifyPropertyChanged event will make the WPF Plot control update its content
             this.Model = tmp;
@@ -75,8 +79,10 @@ namespace Monitor
 
             Model.Series.Clear();
 
-            for (int i = 0; i < series.Length; i++)
-                DataSources.Add(new DataSource());
+            //for (int i = 0; i < series.Length; i++)
+            //    DataSources.Add(new DataSource());
+            DataSources.Add(new NetworkDownDataSource());
+            DataSources.Add(new NetworkUpDataSource());
 
             for (int i = 0; i < series.Length; i++)
             {
@@ -84,11 +90,6 @@ namespace Monitor
                 Model.Series.Add(series[i]);
             }
         }
-        // private void AddRandomValue(int index)
-        // {
-        //     series[index].Points.Add(new DataPoint(series[index].Points.Count, rnd.Next(0, 100)));
-        //     Model.InvalidatePlot(true);
-        // }
         private void GetDataAndFillSeries()
         {
             foreach (var s in series)
@@ -136,7 +137,23 @@ namespace Monitor
                 //     a.Maximum -= 1;
 
                 // AddRandomValue(index);
+
+                if (flag)
+                {
+                    timePeriod_sec -= 20;
+                    flag = timePeriod_sec > 20;
+                }
+
+                else
+                    timePeriod_sec += 20;
+                dataLength = timePeriod_sec;
+                Model.Axes[0].Maximum = timePeriod_sec;
+
+                for (int i = 0; i < DataSources.Count; i++)
+                    DataSources[i].SetParams(dataLength, timePeriod_sec);
+
             }
         }
+        bool flag = true;
     }
 }
